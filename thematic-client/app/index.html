@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Mapas Temáticos - Guararema</title>
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+    <link rel="stylesheet" href="bower_components/bootstrap-table/dist/bootstrap-table.min.css" />
+    <link rel="stylesheet" href="bower_components/lightbox/dist/css/lightbox.css">
+    <link rel="stylesheet" href="bower_components/openlayers/theme/default/style.tidy.css" type="text/css">
+    <link rel="stylesheet" href="bower_components/jquery-ui/themes/start/jquery-ui.min.css" />
+    <link rel="stylesheet" href="bower_components/slimbox2/css/slimbox2.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="bower_components/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" />
+    <!-- build:css styles/custom.css -->
+    <link rel="stylesheet" href="styles/style.css">
+    <!-- endbuild -->
+</head>
+
+<body>
+    <!--[if lt IE 10]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+    <div id="map"></div>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary btn-lg mapButton" data-toggle="modal" data-target="#thematicModal">
+        Criar Mapa Temático
+    </button>
+    <!-- Modal -->
+    <div class="modal fade" id="thematicModal" tabindex="-1" role="dialog" aria-labelledby="thematicModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="thematicModalLabel">Criação de mapa Temático</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- form -->
+                    <form>
+                        <div class="form-group">
+                            <label class="radio-inline">
+                                <input type="radio" name="optradio">Áreas cultivadas</label>
+                            <label class="radio-inline">
+                                <input type="radio" name="optradio">Agravos</label>
+                            <label class="radio-inline">
+                                <input type="radio" name="optradio">Ingredientes</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="attribute-selection">Selecione o atributo</label>
+                            <select class="form-control" id="attribute-selection">
+                                <option></option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="year-selection">Selecione o ano</label>
+                            <select class="form-control" id="year-selection">
+                                <option></option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="culture-selection">Selecione a cultura</label>
+                            <select class="form-control" id="culture-selection">
+                                <option></option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="description-font">Descrição e fonte:</label>
+                            <textarea class="form-control" rows="5" id="description-font"></textarea>
+                            <button class="btn btn-default">botão</button>
+                        </div>
+                        <div class="form-group">
+                            <label for="type-selection">Tipo do Algoritmo</label>
+                            <select class="form-control" id="type-selection">
+                                <option></option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="type-selection">Tipo do Algoritmo</label>
+                            <select class="form-control" id="type-selection">
+                                <option></option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="classes-number">Número de classes</label>
+                            <input id="classes-number" type="text" class="form-control bfh-number">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group colorPicker">
+                                    Cor Inicial
+                                    <input id="initial-color" type="text" value="" class="form-control" />
+                                    <span class="input-group-addon"><i></i></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group colorPicker">
+                                    Cor Final
+                                    <input id="final-color" type="text" value="" class="form-control" />
+                                    <span class="input-group-addon"><i></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <p>Legenda</p>
+                        </div>
+                    </form>
+                    <!--/ form -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-warning">Limpar</button>
+                    <button id="executeThematicButton" type="button" class="btn btn-primary">Executar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <!--
+    <script>
+      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+      e.src='https://www.google-analytics.com/analytics.js';
+      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+      ga('create','UA-XXXXX-X');ga('send','pageview');
+    </script>
+    -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/openlayers/OpenLayers.js"></script>
+    <script src="bower_components/openlayers/lib/deprecated.js"></script>
+    <script src="bower_components/lodash/lodash.js"></script>
+    <script src="bower_components/Chart.js/Chart.min.js"></script>
+    <script src="http://maps.google.com/maps/api/js?v=3&amp;sensor=false"></script>
+    <!-- WaterWebSocket deps
+      <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://code.highcharts.com/stock/highstock.js"></script>
+    -->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <!--/ WaterWebSocket deps -->
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/bootstrap-table/dist/bootstrap-table.min.js"></script>
+    <script src="bower_components/lightbox/dist/js/lightbox.js"></script>
+    <script type="text/javascript" src="bower_components/slimbox2/js/slimbox2.js"></script>
+    <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+    <script src="bower_components/highcharts/highcharts.js"></script>
+    <script src="bower_components/jquery-dialogextend/index.js"></script>
+    <script src="bower_components/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+    <!-- build:js scripts/proj4.js -->
+    <script src="/scripts/vendor/proj4js/lib/proj4js-compressed.js"></script>
+    <script src="/scripts/vendor/proj4js/lib/defs/EPSG29192.js"></script>
+    <script src="/scripts/vendor/proj4js/lib/defs/EPSG3857.js"></script>
+    <script src="/scripts/vendor/proj4js/lib/defs/EPSG4326.js"></script>
+    <script src="/scripts/vendor/proj4js/lib/defs/EPSG900913.js"></script>
+    <script src="/scripts/vendor/proj4js/lib/defs/EPSG31982.js"></script>
+    <!-- endbuild -->
+    <!-- build:js scripts/custom.js -->
+    <script src="scripts/Utils.js"></script>
+    <script src="scripts/Map.js"></script>
+    <script src="scripts/ThematicMap.js"></script>
+    <!-- endbuild -->
+</body>
+
+</html>

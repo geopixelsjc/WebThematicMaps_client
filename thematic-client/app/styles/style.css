@@ -1,0 +1,47 @@
+.browserupgrade {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+body,
+html {
+    height: 100%;
+    width: 100%;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+div.olControlAttribution {
+    bottom: 3px;
+}
+
+.ui-dialog {
+    z-index: 1000 !important;
+    font-size: 12px;
+    width: 'auto';
+}
+
+div.olControlAttribution {
+    bottom: 3px;
+}
+
+.modal-backdrop {
+    z-index: -1;
+}
+
+.moneyLegend {
+    display: inline-block;
+}
+
+.mapButton {
+    top: 70px;
+    left: 10px;
+    cursor: pointer;
+    position: absolute;
+    z-index: 9999;
+}
