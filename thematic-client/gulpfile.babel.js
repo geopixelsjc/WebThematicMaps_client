@@ -1,4 +1,5 @@
 // generated on 2015-06-18 using generator-gulp-webapp 1.0.0
+// testando sincronização
 import gulp from 'gulp';
 import gulpLoadPlugins from 'gulp-load-plugins';
 import browserSync from 'browser-sync';
