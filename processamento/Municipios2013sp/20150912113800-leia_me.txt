@@ -1,0 +1,1 @@
+Foram baixados os shapes do site do IBGE, versão 2013, considerados que estão em SIRGAS 2000 LL e convertidos com redução do número de vértices para SIRGAS 2000 LL nos formatos shape (sp.shp) e GeoJson (sp.gejson)
