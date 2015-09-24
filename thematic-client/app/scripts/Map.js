@@ -1,18 +1,18 @@
-var mapModule = function() {
+var MapModule = function() {
     // constructor
-    var mapModule = function() {},
+    var MapModule = function() {},
         self,
         map,
         vector_layer,
         geojson_format;
 
-    mapModule.prototype = {
+    MapModule.prototype = {
         init: function() {
             self = this;
 
             map = new OpenLayers.Map("map");
             geojson_format = new OpenLayers.Format.GeoJSON();
-
+            
             self.createLayers();
             self.createControls();
             self.initZoom();
@@ -44,19 +44,19 @@ var mapModule = function() {
         getMap: function() {
             return map;
         },
-
-        addGeoJSONFeatures: function(featurecollection) {
-            var convertedFeatures = geojson_format.read(featurecollection);
-            vector_layer.addFeatures(convertedFeatures);
-            map.zoomToExtent(vector_layer.getDataExtent());
+       
+        addGeoJSONFeatures: function(featurecollection) {            
+            map.addLayer(featurecollection);
+            var b = featurecollection.getDataExtent();
+            map.zoomToExtent(b);
         },
 
         removeAllGeoJSONFeatures: function() {
             vector_layer.removeFeatures();
         }
     };
-    return mapModule;
+    return MapModule;
 }();
 
-var Map = new mapModule();
+var Map = new MapModule();
 Map.init();

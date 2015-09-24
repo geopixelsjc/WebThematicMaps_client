@@ -1,9 +1,38 @@
-var thematicMapModule = function() {
-    var dialog;
-    // constructor
-    var thematicMapModule = function() {};
+var ThematicMapModule = function() {
+    
+    //var dialog;
+    
     var self;
-    thematicMapModule.prototype = {
+    
+    var context = {
+        getColour: function(feature) {
+            return feature.attributes["COLOUR"];
+        }
+    };
+
+    var template = {
+        fillOpacity: 0.9,
+        strokeColor: "#555555",
+        strokeWidth: 1,
+        fillColor: "${getColour}"
+    };
+
+    var style = new OpenLayers.Style(template, {context: context});
+    
+    var styleMap = new OpenLayers.StyleMap({'default': style});
+
+    var styleObj = {
+        format: OpenLayers.Format.GeoJSON,
+        styleMap: styleMap,
+        isBaseLayer: false,
+        projection: new OpenLayers.Projection("EPSG:4326")
+    };
+
+    // constructor
+    var ThematicMapModule = function() {};
+
+    ThematicMapModule.prototype = {
+    
         init: function() {
             self = this;
             self.initializeButtonsListeners();
@@ -25,13 +54,16 @@ var thematicMapModule = function() {
         },
 
         generateGeoJSON: function() {
-            var url = 'assets/sp.geojson';
-            $.getJSON(url, function(geojson, status) {
-                Map.addGeoJSONFeatures(geojson);
-            });
+            var url = 'assets/sp.json';
+
+            var vectors = new OpenLayers.Layer.GML("Municípios São Paulo", url, styleObj);
+            
+            Map.addGeoJSONFeatures(vectors);
         }
     };
-    return thematicMapModule;
+    
+    return ThematicMapModule;
 }();
-var thematicMap = new thematicMapModule();
+var thematicMap = new ThematicMapModule();
 thematicMap.init();
+
