@@ -106,6 +106,18 @@ gulp.task('copy_bower', () => {
     ]).pipe(gulp.dest('dist/bower_components'));
 });
 
+gulp.task('deploy_test', () => {
+    gulp.src([
+        'app/scripts/*.js',
+    ]).pipe(gulp.dest('C:\\Program Files\\Apache Software Foundation\\Tomcat 7.0\\webapps\\app\\scripts'));
+    gulp.src([
+        'app/styles/*.css',
+    ]).pipe(gulp.dest('C:\\Program Files\\Apache Software Foundation\\Tomcat 7.0\\webapps\\app\\styles'));
+    return gulp.src([
+        'app/*.html',
+    ]).pipe(gulp.dest('C:\\Program Files\\Apache Software Foundation\\Tomcat 7.0\\webapps\\app'));
+});
+
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
 gulp.task('serve', ['styles', 'fonts'], () => {
