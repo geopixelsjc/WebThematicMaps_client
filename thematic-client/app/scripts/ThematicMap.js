@@ -1,33 +1,7 @@
 var ThematicMapModule = function() {
     
-    //var dialog;
-    
     var self;
-    
-    var context = {
-        getColour: function(feature) {
-            return feature.attributes["COLOUR"];
-        }
-    };
-
-    var template = {
-        fillOpacity: 0.9,
-        strokeColor: "#555555",
-        strokeWidth: 1,
-        fillColor: "${getColour}"
-    };
-
-    var style = new OpenLayers.Style(template, {context: context});
-    
-    var styleMap = new OpenLayers.StyleMap({'default': style});
-
-    var styleObj = {
-        format: OpenLayers.Format.GeoJSON,
-        styleMap: styleMap,
-        isBaseLayer: false,
-        projection: new OpenLayers.Projection("EPSG:4326")
-    };
-
+   
     // constructor
     var ThematicMapModule = function() {};
 
@@ -54,14 +28,38 @@ var ThematicMapModule = function() {
         },
 
         generateGeoJSON: function() {
-            var url = 'assets/sp.json';
+            var url = "http://localhost:8080/WebThematicMaps_server/rest/json/choroplethmap?"
+            url += "table=tab_valores&attribute=nome&geocode=cod_ibge&value=valor&layer=tab_municipios";
+            url += "&featurecode=cod_ibge&featurename=municipio&box=a&groupingtype=quantiles&nclasses=4&f";
+            url += "irstcolor=ff0000&lastcolor=00ff00&year=ano&targetyear=2013&targetattribute=abamectina";
 
-            var vectors = new OpenLayers.Layer.GML("Municípios São Paulo", url, styleObj);
+            $.getJSON( url, function( data ) {
+                var formaterJson = new OpenLayers.Format.GeoJSON()
+
+                var featuresFromJson = formaterJson.read(
+                    data.map
+                );
+
+                var featuresStylized = new Array();
+
+                for (var i = featuresFromJson.length - 1; i >= 0; i--) {
+                    featuresStylized.push(new OpenLayers.Feature.Vector(
+                        featuresFromJson[i].geometry,
+                        featuresFromJson[i].attributes,
+                        {fillColor: featuresFromJson[i].attributes.color}
+                    ));
+                };
+
+                var vectors = new OpenLayers.Layer.Vector("Municípios São Paulo");
+                
+                vectors.addFeatures(featuresStylized);
+
+                Map.addGeoJSONFeatures(vectors);
+            });
             
-            Map.addGeoJSONFeatures(vectors);
         }
     };
-    
+
     return ThematicMapModule;
 }();
 var thematicMap = new ThematicMapModule();

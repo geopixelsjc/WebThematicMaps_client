@@ -45,3 +45,12 @@ div.olControlAttribution {
     position: absolute;
     z-index: 9999;
 }
+
+.infoMap {
+    position: absolute;
+    bottom: 2%;
+    left: 2%;
+    width: 400px;
+    height: 15px;
+    z-index: 9999;
+}
