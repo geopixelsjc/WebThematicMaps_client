@@ -12,6 +12,7 @@
         "slimbox2": "https://github.com/cbeyls/slimbox/releases/download/2.05/slimbox-2.05.zip",
         "jquery-dialogextend": "https://raw.githubusercontent.com/ROMB/jquery-dialogextend/master/build/jquery.dialogextend.min.js",
         "highcharts": "~4.1.6",
-        "mjolnic-bootstrap-colorpicker": "~2.3.0"
+        "mjolnic-bootstrap-colorpicker": "~2.3.0",
+        "mcColorPicker": "http://www.menucool.com/download/mcColorPicker.zip"
     }
 }
