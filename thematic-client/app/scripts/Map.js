@@ -50,17 +50,28 @@ var MapModule = function() {
         addGeoJSONFeatures: function(featurecollection) {            
             map.addLayer(featurecollection);
 
-            var selectFeature = new OpenLayers.Control.SelectFeature(featurecollection,{
-                hover: true,
-                onSelect: function(feature) {
-                    var Msg = feature.attributes["name"] + ": " + feature.attributes["value"];
-                    document.getElementById("info").innerHTML = Msg;
+            var selectFeature = new OpenLayers.Control.SelectFeature(
+                featurecollection,
+                {
+                    hover: true,
+                    highlightOnly: true,
+                    overFeature: function(feature) {
+                        var information = feature.attributes["name"] + ": " + feature.attributes["value"];
+                        document.getElementById("info").innerHTML = information;
+                        feature.renderIntent = "select";
+                        feature.layer.drawFeature(feature)
+                    },
+                    outFeature: function(feature){
+                        feature.renderIntent = "default";
+                        feature.layer.drawFeature(feature)
+                    }
                 }
-            });
-
+            );
+           
             map.addControl(selectFeature);
+           
             selectFeature.activate();
-            
+             
             var bounds = new OpenLayers.Bounds();
 
             for (var i = selectFeature.layer.features.length - 1; i >= 0; i--) {
@@ -80,6 +91,14 @@ var MapModule = function() {
 
             content.innerHTML = '<p>You clicked here:</p><code>' + hdms + '</code>';
             overlay.setPosition(coordinate);
+        },
+
+        existsLayer: function(layer){
+            if(map.getLayersByName(layer).length > 0){
+                return true;
+            }else{
+                return false;
+            }
         }
     };
     return MapModule;

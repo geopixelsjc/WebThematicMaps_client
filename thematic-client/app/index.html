@@ -29,7 +29,8 @@
   <![endif]-->
     <div id="map"></div>
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary btn-lg mapButton" data-toggle="modal" data-target="#thematicModal">
+    <button type="button" class="btn btn-primary btn-lg mapButton" id="showModal"> 
+    <!-- data-toggle="modal" data-target="#thematicModal"> -->
         Criar Mapa Temático
     </button>
     <!-- Div Info -->
@@ -50,6 +51,10 @@
                 <div class="modal-body">
                     <!-- form -->
                     <form>
+                        <div class="form-group">
+                            <label for="name-thematic">Nome para o Tema</label>
+                            <input type="text" id="name-thematic" placeholder="Nome" class="form-control">
+                        </div>
                         <div class="form-group">
                             <label for="attribute-selection">Selecione o tipo de pesquisa</label>
                             <div class="row">
@@ -102,8 +107,10 @@
                         -->
                         <div class="form-group">
                             <label for="description-font">Descrição e fonte:</label>
-                            <textarea class="form-control" rows="5" id="description-font"></textarea>
-                            <button class="btn btn-default">botão</button>
+                            <textarea class="form-control" rows="2" id="description-font"></textarea>
+                            <button class="btn btn-default">
+                                <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                            </button>
                         </div>
                         <div class="form-group">
                             <div class="row">
@@ -135,7 +142,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="classes-number">Cor Inicial</label><br>
-                                    <input type="text" class="color" />
+                                    <input id="first-color" type="text" class="color"/>
                                     <!--
                                     <div class="input-group colorPicker">
                                         Cor Inicial
@@ -147,7 +154,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <label for="classes-number">Cor Final</label><br>
-                                    <input type="text" class="color" />
+                                    <input id="last-color" type="text" class="color"/>
                                     <!--
                                     <div class="input-group colorPicker">
                                         Cor Final
@@ -170,7 +177,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-warning">Limpar</button>
+                    <button id="limparformulario" type="button" class="btn btn-warning">Limpar</button>
                     <button id="executeThematicButton" type="button" class="btn btn-primary">Executar</button>
                 </div>
             </div>
@@ -217,10 +224,10 @@
     <script src="/scripts/vendor/proj4js/lib/defs/EPSG31982.js"></script>
     <!-- endbuild -->
     <!-- build:js scripts/custom.js -->
+    <script src="scripts/configureThematic.js"></script>
     <script src="scripts/Utils.js"></script>
     <script src="scripts/Map.js"></script>
     <script src="scripts/ThematicMap.js"></script>
-    <script src="scripts/configureThematic.js"></script>
     <!-- endbuild -->
 </body>
 
