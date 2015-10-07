@@ -1,7 +1,8 @@
 var ThematicMapModule = function() {
     
     var self;
-   
+    var domain = "http://localhost:8080/WebThematicMaps_server/rest/json";
+
     // constructor
     var ThematicMapModule = function() {};
 
@@ -14,24 +15,43 @@ var ThematicMapModule = function() {
             self.initializeRadiolisteners();
             self.initializeTextlisteners();
             self.initializeComboBoxlisteners();
+
+            self.thematics = new Array();
         },
 
         initializeModallisteners: function(){
             $('#thematicModal').on('hidden.bs.modal', function () {
                self.clearForm();
             });
+            $('#thematicLegend').on('hidden.bs.modal', function () {
+               self.clearForm();
+            });
         },
 
         initializeButtonsListeners: function() {
+            $("#finishShowLegend").click(function(){
+                var thematicLegend = $('#thematicLegend');
+                thematicLegend.modal('hide'); 
+            });
             $('#showModal').click(function(){
                 $("#thematicModal").modal("show");
 
-                var url = "http://localhost:8080/WebThematicMaps_server/rest/json/indicators?";
+                var url = domain + "/indicators?";
                 url += "table="+"tab_indicadores";
                 $.getJSON( url, function( data ) {
                     self.tableIndicators = data;
                     
                 });
+            });
+            $('#showModalLegenda').click(function(){
+                $("#thematicLegend").modal("show");
+                var optAttributes="";
+                for (var i = self.thematics.length - 1; i >= 0; i--) {
+                    var name = self.thematics[i].theme;
+                    optAttributes += '<option value="' + name + '">' + name + '</option>';                    
+                };
+                $("#thema-selection").html(optAttributes);
+                self.loadLegend($("#thema-selection option:selected").text());
             });
             $("#executeThematicButton").click(function() {
                 var validate = true;
@@ -113,6 +133,28 @@ var ThematicMapModule = function() {
             self.loadDescription();
         },
 
+        loadLegend: function(theme){
+            var table="<table class='table table-striped' border 1>";
+            table +="<tr><th>Cores</th><th>Classes</th><th>Menor Valor</th><th>Maior Valor</th></tr>";
+            var legend;
+            for (var i = 0; i <= self.thematics.length - 1; i++) {
+                if(self.thematics[i].theme == theme){
+                    legend = JSON.parse(self.thematics[i].legend);
+                    break;
+                }
+            }
+            for (var i = 0; i <= legend.length - 1; i++) {
+                table += '<tr>'
+                table += '<td bgcolor="' + legend[i].Color + '"></td>';
+                table += '<td>' + legend[i].Class + '</td>';
+                table += '<td>' + legend[i].MinValue + '</td>';
+                table += '<td>' + legend[i].MaxValue + '</td>';
+                table += '</tr>'
+            };
+            table += "</table>";
+            $("#table-legend").html(table);
+        },
+
         initializeTextlisteners: function(){
        
         },
@@ -120,6 +162,9 @@ var ThematicMapModule = function() {
         initializeComboBoxlisteners : function(){
             $("#attribute-selection").change(function(){
                 self.loadDescription();
+            });
+            $("#thema-selection").change(function(){
+                self.loadLegend($("#thema-selection option:selected").text());
             });
         },
 
@@ -139,8 +184,6 @@ var ThematicMapModule = function() {
         clearForm: function(){
             $("#name-thematic").val("");
             $("#classes-number").val("");
-            $("#first-color").val("");
-            $("#last-color").val("");
             $("#optC").prop('checked', false);
             $("#optA").prop('checked', false);
             $("#optI").prop('checked', false);
@@ -158,7 +201,7 @@ var ThematicMapModule = function() {
                 typeSelecion = "steps";
             }
 
-            var url = "http://localhost:8080/WebThematicMaps_server/rest/json/choroplethmap?";
+            var url = domain + "/choroplethmap?";
             
             url += "table=" + "tab_valores";
             url += "&attribute=" + "nome";
@@ -178,7 +221,13 @@ var ThematicMapModule = function() {
 
 
             $.getJSON( url, function( data ) {
-                if(data.map != null){
+                if(data.map != null && data.legend != null){
+
+                    self.thematics.push({
+                        theme: self.thematicName,
+                        legend: data.legend 
+                    });
+
                     var formaterJson = new OpenLayers.Format.GeoJSON()
 
                     var featuresFromJson = formaterJson.read(

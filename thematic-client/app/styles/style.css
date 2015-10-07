@@ -39,8 +39,16 @@ div.olControlAttribution {
 }
 
 .mapButton {
-    top: 70px;
-    left: 10px;
+    top: 10px;
+    left: 45px;
+    cursor: pointer;
+    position: absolute;
+    z-index: 9999;
+}
+
+.legendButton {
+    top: 10px;
+    left: 250px;
     cursor: pointer;
     position: absolute;
     z-index: 9999;
@@ -51,6 +59,16 @@ div.olControlAttribution {
     bottom: 2%;
     left: 2%;
     width: 400px;
-    height: 15px;
+    height: 20px;
     z-index: 9999;
+}
+
+.tableArea {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.table {
+    height: 100%;
+    width: 100%;
 }
