@@ -72,3 +72,16 @@ div.olControlAttribution {
     height: 100%;
     width: 100%;
 }
+
+.descriptionAtt {
+    display: inline;
+    width: 90%;
+}
+
+.fileAtt{
+    display: inline;
+}
+
+.fileAttButton{
+    align: middle;
+}

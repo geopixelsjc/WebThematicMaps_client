@@ -42,6 +42,7 @@ var ThematicMapModule = function() {
                     self.tableIndicators = data;
                     
                 });
+                self.loadDefaultValues();
             });
             $('#showModalLegenda').click(function(){
                 $("#thematicLegend").modal("show");
@@ -110,6 +111,11 @@ var ThematicMapModule = function() {
             });
         },
 
+        loadDefaultValues: function(){
+            $("#name-thematic").val(Map.getNewNameThematic());
+            $("#classes-number").val("4");
+        },
+
         initializeRadiolisteners: function(){
             $("#optC").click(function(){
                 self.loadComboAttributes("C");
@@ -130,7 +136,7 @@ var ThematicMapModule = function() {
                 }
             };
             $("#attribute-selection").html(optAttributes);
-            self.loadDescription();
+            self.loadDescriptionFile();
         },
 
         loadLegend: function(theme){
@@ -159,18 +165,38 @@ var ThematicMapModule = function() {
        
         },
 
+        loadDescriptionFile: function(){
+            var attribute = self.loadRowAttributeById($("#attribute-selection").val());
+            if(attribute){
+                self.loadDescription(attribute);
+                self.loadLinkFile(attribute);    
+            }
+        },
+
         initializeComboBoxlisteners : function(){
             $("#attribute-selection").change(function(){
-                self.loadDescription();
+                self.loadDescriptionFile();
             });
             $("#thema-selection").change(function(){
                 self.loadLegend($("#thema-selection option:selected").text());
             });
         },
 
-        loadDescription: function(){
-            var attribute = self.loadRowAttributeById($("#attribute-selection").val());
-            $("#description-font").val(attribute.descricao);
+        loadDescription: function(attribute){
+            if(attribute.descricao != "null"){
+                $("#description-font").val(attribute.descricao);    
+            }
+        },
+
+        loadLinkFile: function(attribute){
+            if(attribute.arquivo != "null"){
+                var win = window.open(attribute.arquivo, '_blank');
+                if(win){
+                    win.focus();
+                }else{
+                    alert('Por favor permita popup para este site.');
+                }  
+            }
         },
 
         loadRowAttributeById: function(id){
@@ -241,7 +267,7 @@ var ThematicMapModule = function() {
                                 strokeOpacity: .7,
                                 strokeWidth: 1,
                                 fillColor: "${color}",
-                                fillOpacity: 0.8,
+                                fillOpacity: 1,
                                 cursor: "pointer"
                             })
                         })

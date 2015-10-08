@@ -99,7 +99,29 @@ var MapModule = function() {
             }else{
                 return false;
             }
+        },
+
+        getNewNameThematic: function(){
+            var index = 0;
+            var newName = false;
+            var nameThematic = "";
+            while(newName==false){
+                index++;
+                nameThematic = "Tema_" + index;
+                var existName = false;
+                for (var i = map.layers.length - 1; i >= 0; i--) {
+                    if(nameThematic == map.layers[i].name){
+                        existName = true;
+                        break;
+                    }
+                }
+                if(!existName){
+                    newName = true;
+                }
+            }
+            return nameThematic;
         }
+
     };
     return MapModule;
 }();
