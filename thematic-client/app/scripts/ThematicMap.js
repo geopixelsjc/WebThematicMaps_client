@@ -1,6 +1,9 @@
 var ThematicMapModule = function() {
     
     var self;
+    //Deploy
+    //var domain = "http://74.208.229.211:8080/WebThematicMaps_server/rest/json";
+    //teste
     var domain = "http://localhost:8080/WebThematicMaps_server/rest/json";
 
     // constructor
