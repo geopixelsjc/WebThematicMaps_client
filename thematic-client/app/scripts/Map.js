@@ -47,8 +47,11 @@ var MapModule = function() {
             return map;
         },
        
-        addGeoJSONFeatures: function(featurecollection) {            
+        addGeoJSONFeatures: function(featurecollection) {      
+
             map.addLayer(featurecollection);
+
+            self.displayLayerOnTop(featurecollection.name);
 
             var selectFeature = new OpenLayers.Control.SelectFeature(
                 featurecollection,
@@ -81,6 +84,15 @@ var MapModule = function() {
             map.zoomToExtent(bounds);
         },
 
+        getLayerNameOnTop: function(onlyVisible){
+            var indexTop = self.getMaxZIndexLayes(onlyVisible);
+            for (var i = map.layers.length - 1; i >= 0; i--) {
+                if(map.layers[i].getZIndex() ==  indexTop ){
+                    return map.layers[i].name;
+                }
+            }
+        },
+
         removeAllGeoJSONFeatures: function() {
             vector_layer.removeFeatures();
         },
@@ -98,6 +110,30 @@ var MapModule = function() {
                 return true;
             }else{
                 return false;
+            }
+        },
+
+        getMaxZIndexLayes: function(onlyVisible){
+            var index = 0;
+            for (var i = map.layers.length - 1; i >= 0; i--) {
+                if(onlyVisible){
+                    if(map.layers[i].getZIndex() > index && map.layers[i].visibility == true){
+                        index = map.layers[i].getZIndex();
+                    }    
+                }else{
+                    if(map.layers[i].getZIndex() > index){
+                        index = map.layers[i].getZIndex();
+                    }
+                }
+            };
+            return index;
+        },
+
+        displayLayerOnTop: function(layerName){
+            if(self.existsLayer(layerName)){
+                var layer = map.getLayersByName(layerName)[0];
+                layer.setZIndex(parseInt(self.getMaxZIndexLayes(false)) + 1);  
+                layer.redraw();  
             }
         },
 

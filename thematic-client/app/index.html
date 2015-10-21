@@ -33,11 +33,13 @@
     <!-- data-toggle="modal" data-target="#thematicModal"> -->
         Criar Mapa Temático
     </button>
-     <!-- Button trigger modal -->
+    
+     <!-- Button trigger modal 
     <button type="button" class="btn btn-default btn-lg legendButton" id="showModalLegenda"> 
-    <!-- data-toggle="modal" data-target="#thematicModal"> -->
+    <!-- data-toggle="modal" data-target="#thematicModal"> 
         Legendas
     </button>
+    -->
     <!-- Div Info -->
     <h4>
         <div id="info" class="label label label-default infoMap">      
@@ -45,12 +47,14 @@
         </div>
     </h4>
     <!-- Modal -->
-    <div class="modal fade" id="thematicLegend" tabindex="-1" role="dialog" aria-labelledby="thematicModalLabel">
-        <div class="modal-dialog" role="document">
+   <!-- <div class="modal fade" id="thematicLegend" tabindex="-1" role="dialog" aria-labelledby="thematicModalLabel"> -->
+   <div class="window_bottom" >
+        <button id="minimizeWindow" value="0" type="button">Legendas</button>
+        <!--<div class="modal-dialog" role="document">-->
+        <div id="legends">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="thematicModalLabel">Legendas dos mapas Temáticos</h4>
+                    <h4 class="modal-title" id="thematicModalLabel">Legendas dos Temáticos</h4>
                 </div>
                 <div class="modal-body">
                     <!-- form -->
@@ -67,12 +71,15 @@
                     </form>
                     <div id="table-legend" class="tableArea"></div>
                 </div>
+                <!--
                 <div class="modal-footer">
                     <button id="finishShowLegend" type="button" class="btn btn-primary">Fechar</button>
                 </div>
+                -->
             </div>
         </div>
     </div>
+    <!--</div>-->
     <!-- Modal -->
     <div class="modal fade" id="thematicModal" tabindex="-1" role="dialog" aria-labelledby="thematicModalLabel">
         <div class="modal-dialog" role="document">

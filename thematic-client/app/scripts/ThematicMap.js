@@ -47,15 +47,17 @@ var ThematicMapModule = function() {
                 });
                 self.loadDefaultValues();
             });
-            $('#showModalLegenda').click(function(){
-                $("#thematicLegend").modal("show");
-                var optAttributes="";
-                for (var i = self.thematics.length - 1; i >= 0; i--) {
-                    var name = self.thematics[i].theme;
-                    optAttributes += '<option value="' + name + '">' + name + '</option>';                    
-                };
-                $("#thema-selection").html(optAttributes);
-                self.loadLegend($("#thema-selection option:selected").text());
+            $('#minimizeWindow').click(function(){
+                if($('#minimizeWindow').val() == 0){
+                    var optAttributes="";
+                    for (var i = self.thematics.length - 1; i >= 0; i--) {
+                        var name = self.thematics[i].theme;
+                        optAttributes += '<option value="' + name + '">' + name + '</option>';                    
+                    };
+                    $("#thema-selection").html(optAttributes);
+                    $("#thema-selection").val(Map.getLayerNameOnTop(true));
+                    self.loadLegend($("#thema-selection option:selected").text());
+                }
             });
             $("#executeThematicButton").click(function() {
                 var validate = true;
@@ -139,7 +141,7 @@ var ThematicMapModule = function() {
                 }
             };
             $("#attribute-selection").html(optAttributes);
-            self.loadDescriptionFile();
+            self.loadDescriptionAndFile();
         },
 
         loadLegend: function(theme){
@@ -168,7 +170,7 @@ var ThematicMapModule = function() {
        
         },
 
-        loadDescriptionFile: function(){
+        loadDescriptionAndFile: function(){
             var attribute = self.loadRowAttributeById($("#attribute-selection").val());
             if(attribute){
                 self.loadDescription(attribute);
@@ -178,10 +180,13 @@ var ThematicMapModule = function() {
 
         initializeComboBoxlisteners : function(){
             $("#attribute-selection").change(function(){
-                self.loadDescriptionFile();
+                self.loadDescriptionAndFile();
             });
             $("#thema-selection").change(function(){
                 self.loadLegend($("#thema-selection option:selected").text());
+            });
+            $("#thema-selection").change(function(){
+                Map.displayLayerOnTop($("#thema-selection").val());
             });
         },
 
@@ -193,12 +198,15 @@ var ThematicMapModule = function() {
 
         loadLinkFile: function(attribute){
             if(attribute.arquivo != "null"){
+                $("#file-link").show();
                 var win = window.open(attribute.arquivo, '_blank');
                 if(win){
                     win.focus();
                 }else{
                     alert('Por favor permita popup para este site.');
                 }  
+            } else {
+                $("#file-link").hide();
             }
         },
 
@@ -227,7 +235,7 @@ var ThematicMapModule = function() {
             if($("#type-selection").val() == "Quantil"){
                 typeSelecion = "quantiles";
             } else {
-                typeSelecion = "steps";
+                typeSelecion = "slices";
             }
 
             var url = domain + "/choroplethmap?";
@@ -275,7 +283,7 @@ var ThematicMapModule = function() {
                             })
                         })
                     });
-                    
+
                     vectors.addFeatures(featuresFromJson);
                     
                     Map.addGeoJSONFeatures(vectors);    
