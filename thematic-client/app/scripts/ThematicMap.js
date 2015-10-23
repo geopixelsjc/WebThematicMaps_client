@@ -2,9 +2,9 @@ var ThematicMapModule = function() {
     
     var self;
     //Deploy
-    var domain = "http://74.208.229.211:8080/WebThematicMaps_server/rest/json";
+    //var domain = "http://74.208.229.211:8080/WebThematicMaps_server/rest/json";
     //teste
-    //var domain = "http://localhost:8080/WebThematicMaps_server/rest/json";
+    var domain = "http://localhost:8080/WebThematicMaps_server/rest/json";
 
     // constructor
     var ThematicMapModule = function() {};
@@ -50,7 +50,7 @@ var ThematicMapModule = function() {
             $('#minimizeWindow').click(function(){
                 if($('#minimizeWindow').val() == 0){
                     var optAttributes="";
-                    for (var i = self.thematics.length - 1; i >= 0; i--) {
+                    for (var i = 0; i <= self.thematics.length - 1; i++) {
                         var name = self.thematics[i].theme;
                         optAttributes += '<option value="' + name + '">' + name + '</option>';                    
                     };
@@ -135,7 +135,7 @@ var ThematicMapModule = function() {
 
         loadComboAttributes: function(opt){
             var optAttributes="";
-            for (var i = self.tableIndicators.length - 1; i >= 0; i--) {
+            for (var i = 0; i <= self.tableIndicators.length - 1; i++) {
                 if(self.tableIndicators[i].indicador[0] == opt){
                     optAttributes += '<option value="' + self.tableIndicators[i].id + '">' + self.tableIndicators[i].nome + '</option>';
                 }
