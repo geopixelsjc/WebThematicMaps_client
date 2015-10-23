@@ -82,6 +82,8 @@ var MapModule = function() {
             };
 
             map.zoomToExtent(bounds);
+
+            $('#load-modal').modal('hide');
         },
 
         getLayerNameOnTop: function(onlyVisible){

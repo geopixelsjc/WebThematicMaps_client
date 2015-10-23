@@ -113,6 +113,9 @@ gulp.task('deploy_test', () => {
     gulp.src([
         'app/styles/*.css',
     ]).pipe(gulp.dest('C:\\Program Files\\Apache Software Foundation\\Tomcat 7.0\\webapps\\app\\styles'));
+    gulp.src([
+        'app/images/*.*',
+    ]).pipe(gulp.dest('C:\\Program Files\\Apache Software Foundation\\Tomcat 7.0\\webapps\\app\\images'));
     return gulp.src([
         'app/*.html',
     ]).pipe(gulp.dest('C:\\Program Files\\Apache Software Foundation\\Tomcat 7.0\\webapps\\app'));

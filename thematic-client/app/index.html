@@ -24,6 +24,7 @@
 </head>
 
 <body>
+
     <!--[if lt IE 10]>
     <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
@@ -33,7 +34,19 @@
     <!-- data-toggle="modal" data-target="#thematicModal"> -->
         Criar Mapa Temático
     </button>
-    
+
+    <!-- Modal -->
+    <div class="modal fade" id="load-modal" role="dialog">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-body">
+            <p><img src="images/loading1.gif" > Carregando aguarde... </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Fim Modal Waiting... -->
+
      <!-- Button trigger modal 
     <button type="button" class="btn btn-default btn-lg legendButton" id="showModalLegenda"> 
     <!-- data-toggle="modal" data-target="#thematicModal"> 
