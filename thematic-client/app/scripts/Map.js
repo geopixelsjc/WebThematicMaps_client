@@ -39,9 +39,6 @@ var MapModule = function() {
         },
 
         initZoom: function() {
-            //var bounds = new OpenLayers.Bounds(-53.110266333096, -25.300627623906, -44.158735820765, -19.78018433391);
-            var bounds = new OpenLayers.Bounds(-2699419.81, -5191807.75);
-            
             var zoom = 8;
             var lonlat = new OpenLayers.LonLat(-5191807.75, -2699419.81);
             map.setCenter(lonlat, zoom);

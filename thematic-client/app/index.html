@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Mapas Temáticos</title>
-    <!-- Place favicon.ico in the root directory -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
@@ -48,12 +47,6 @@
     </div>
     <!--Fim Modal Waiting... -->
 
-     <!-- Button trigger modal 
-    <button type="button" class="btn btn-default btn-lg legendButton" id="showModalLegenda"> 
-    <!-- data-toggle="modal" data-target="#thematicModal"> 
-        Legendas
-    </button>
-    -->
     <!-- Div Info -->
     <h5>
         <div id="info" class="label label label-default infoMap">      
@@ -61,10 +54,8 @@
         </div>
     </h5>
     <!-- Modal -->
-   <!-- <div class="modal fade" id="thematicLegend" tabindex="-1" role="dialog" aria-labelledby="thematicModalLabel"> -->
    <div class="window_bottom" >
         <button id="minimizeWindow" value="0" type="button">Legendas</button>
-        <!--<div class="modal-dialog" role="document">-->
         <div id="legends">
             <div class="modal-content">
                 <div class="modal-header">
@@ -85,11 +76,6 @@
                     </form>
                     <div id="table-legend" class="tableArea"></div>
                 </div>
-                <!--
-                <div class="modal-footer">
-                    <button id="finishShowLegend" type="button" class="btn btn-primary">Fechar</button>
-                </div>
-                -->
             </div>
         </div>
     </div>
@@ -105,12 +91,6 @@
                 <div class="modal-body">
                     <!-- form -->
                     <form>
-                        <!--
-                        <div class="form-group">
-                            <label for="name-thematic">Nome para o Tema</label>
-                            <input type="text" id="name-thematic" placeholder="Nome" class="form-control">
-                        </div>
-                        -->
                         <div class="form-group">
                             <label for="attribute-selection">Selecione o tipo de pesquisa</label>
                             <div class="row">
@@ -144,17 +124,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- //Comentado a pedido do Bira.
-                        <div class="form-group">
-                            <label for="culture-selection">Selecione a cultura</label>
-                            <select class="form-control" id="culture-selection">
-                                <option></option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                            </select>
-                        </div>
-                        -->
                         <div class="form-group">
                             <label for="description-font">Descrição e fonte:</label>
                             <textarea class="form-control descriptionAtt" rows="2" id="description-font"></textarea>
@@ -182,40 +151,17 @@
                                 <div class="col-md-6">
                                     <label for="classes-number">Cor Inicial</label><br>
                                     <input id="first-color" type="text" class="color"/>
-                                    <!--
-                                    <div class="input-group colorPicker">
-                                        Cor Inicial
-                                        <input id="initial-color" type="text" value="" class="form-control" />
-                                        <span class="input-group-addon"><i></i></span>
-                                        
-                                    </div>
-                                    -->
                                 </div>
                                 <div class="col-md-6">
                                     <label for="classes-number">Cor Final</label><br>
                                     <input id="last-color" type="text" class="color"/>
-                                    <!--
-                                    <div class="input-group colorPicker">
-                                        Cor Final
-                                        
-                                        <input id="final-color" type="text" value="" class="form-control" />
-                                        <span class="input-group-addon"><i></i></span>
-                                        
-                                    </div>
-                                    -->
                                 </div>
                             </div>
                         </div>
-                        <!--
-                        <div class="form-group">
-                            <p>Legenda</p>
-                        </div>
-                        -->
                     </form>
                     <!--/ form -->
                 </div>
                 <div class="modal-footer">
-                    <!--<button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>-->
                     <button id="limparformulario" type="button" class="btn btn-warning">Limpar</button>
                     <button id="executeThematicButton" type="button" class="btn btn-primary">Executar</button>
                 </div>

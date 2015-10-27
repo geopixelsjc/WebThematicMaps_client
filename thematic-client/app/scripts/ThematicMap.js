@@ -63,21 +63,7 @@ var ThematicMapModule = function() {
             });
             $("#executeThematicButton").click(function() {
                 var validate = true;
-                /*
-                if($("#name-thematic").val().length == 0){
-                    validate = false;
-                    alert("Entre com o nome para o novo tema.");
-                    $("#name-thematic").focus();
-                    return;
-                }else{
-                    if(Map.existsLayer($("#name-thematic").val())){
-                        validate = false;
-                        alert("Este nome já existe.");
-                        $("#name-thematic").focus();
-                        return;
-                    }
-                }
-                */
+
                 if(!$("#optC").is(":checked") && !$("#optA").is(":checked")  && !$("#optI").is(":checked") ){
                     validate = false;
                     alert("Selecione o tipo de pesquisa.");
@@ -108,7 +94,6 @@ var ThematicMapModule = function() {
                     return;
                 }
                 if(validate){
-                    //self.thematicName = $("#name-thematic").val();
                     self.thematicName = Map.getNewNameThematic(
                         $("#attribute-selection option:selected").text() + 
                         "_" + 
@@ -126,7 +111,6 @@ var ThematicMapModule = function() {
         },
 
         loadDefaultValues: function(){
-            //$("#name-thematic").val(Map.getNewNameThematic());
             $("#classes-number").val("4");
         },
 
@@ -245,7 +229,6 @@ var ThematicMapModule = function() {
         },
         
         clearForm: function(){
-            //$("#name-thematic").val("");
             $("#classes-number").val("");
             $("#optC").prop('checked', false);
             $("#optA").prop('checked', false);
