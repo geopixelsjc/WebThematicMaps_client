@@ -10,7 +10,10 @@ var MapModule = function() {
         init: function() {
             self = this;
 
-            map = new OpenLayers.Map("map");
+            map = new OpenLayers.Map("map",{
+                projection: new OpenLayers.Projection("EPSG:3857")
+            });
+
             geojson_format = new OpenLayers.Format.GeoJSON();
             
             self.createLayers();
@@ -25,10 +28,10 @@ var MapModule = function() {
                     layers: "basic"
                 }
             );
-            map.addLayers([ol_wms]);
 
-            vector_layer = new OpenLayers.Layer.Vector();
-            map.addLayer(vector_layer);
+            var ol_osm = new OpenLayers.Layer.OSM("Open StreetMap");
+
+            map.addLayers([ol_osm]);
         },
 
         createControls: function() {
@@ -36,11 +39,12 @@ var MapModule = function() {
         },
 
         initZoom: function() {
-            /*var zoom = 3;
-            var lonlat = new OpenLayers.LonLat(-46.03502, -23.412864);
-            map.setCenter(lonlat, zoom);*/
-            var bounds = new OpenLayers.Bounds(-53.110266333096, -25.300627623906, -44.158735820765, -19.78018433391);
-            map.zoomToExtent(bounds);
+            //var bounds = new OpenLayers.Bounds(-53.110266333096, -25.300627623906, -44.158735820765, -19.78018433391);
+            var bounds = new OpenLayers.Bounds(-2699419.81, -5191807.75);
+            
+            var zoom = 8;
+            var lonlat = new OpenLayers.LonLat(-5191807.75, -2699419.81);
+            map.setCenter(lonlat, zoom);
         },
 
         getMap: function() {
@@ -84,6 +88,8 @@ var MapModule = function() {
             map.zoomToExtent(bounds);
 
             $('#load-modal').modal('hide');
+
+            alert("Tema " + featurecollection.name + " criado com sucesso!");
         },
 
         getLayerNameOnTop: function(onlyVisible){
@@ -139,16 +145,15 @@ var MapModule = function() {
             }
         },
 
-        getNewNameThematic: function(){
+        getNewNameThematic: function(nameThematic){
             var index = 0;
             var newName = false;
-            var nameThematic = "";
             while(newName==false){
                 index++;
-                nameThematic = "Tema_" + index;
+                newNameThematic = nameThematic + "_" + index;
                 var existName = false;
                 for (var i = map.layers.length - 1; i >= 0; i--) {
-                    if(nameThematic == map.layers[i].name){
+                    if(newNameThematic == map.layers[i].name){
                         existName = true;
                         break;
                     }
@@ -157,7 +162,7 @@ var MapModule = function() {
                     newName = true;
                 }
             }
-            return nameThematic;
+            return newNameThematic;
         }
 
     };

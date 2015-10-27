@@ -32,6 +32,7 @@ var ThematicMapModule = function() {
         },
 
         initializeButtonsListeners: function() {
+            $("#file-link").hide();
             $("#finishShowLegend").click(function(){
                 var thematicLegend = $('#thematicLegend');
                 thematicLegend.modal('hide'); 
@@ -40,7 +41,8 @@ var ThematicMapModule = function() {
                 $("#thematicModal").modal("show");
 
                 var url = domain + "/indicators?";
-                url += "table="+"tab_indicadores";
+                url += "table=" + "tab_indicadores";
+                url += "&indicator=" + "nome";
                 $.getJSON( url, function( data ) {
                     self.tableIndicators = data;
                     
@@ -61,6 +63,7 @@ var ThematicMapModule = function() {
             });
             $("#executeThematicButton").click(function() {
                 var validate = true;
+                /*
                 if($("#name-thematic").val().length == 0){
                     validate = false;
                     alert("Entre com o nome para o novo tema.");
@@ -74,6 +77,7 @@ var ThematicMapModule = function() {
                         return;
                     }
                 }
+                */
                 if(!$("#optC").is(":checked") && !$("#optA").is(":checked")  && !$("#optI").is(":checked") ){
                     validate = false;
                     alert("Selecione o tipo de pesquisa.");
@@ -104,7 +108,12 @@ var ThematicMapModule = function() {
                     return;
                 }
                 if(validate){
-                    self.thematicName = $("#name-thematic").val();
+                    //self.thematicName = $("#name-thematic").val();
+                    self.thematicName = Map.getNewNameThematic(
+                        $("#attribute-selection option:selected").text() + 
+                        "_" + 
+                        $("#year-selection").val()
+                    );
                     self.generateGeoJSON();
 
                     var thematicModal = $('#thematicModal');
@@ -117,7 +126,7 @@ var ThematicMapModule = function() {
         },
 
         loadDefaultValues: function(){
-            $("#name-thematic").val(Map.getNewNameThematic());
+            //$("#name-thematic").val(Map.getNewNameThematic());
             $("#classes-number").val("4");
         },
 
@@ -141,7 +150,7 @@ var ThematicMapModule = function() {
                 }
             };
             $("#attribute-selection").html(optAttributes);
-            self.loadDescriptionAndFile();
+            self.loadFeaturesAttribute();
         },
 
         loadLegend: function(theme){
@@ -166,21 +175,38 @@ var ThematicMapModule = function() {
             $("#table-legend").html(table);
         },
 
+        loadComboYear: function(attribute){
+            var url = domain + "/years?";
+            url += "table=" + "tab_valores";
+            url += "&attribute=" + "nome";
+            url += "&value=" + "valor";
+            url += "&year=" + "ano";
+            url += "&targetattribute=" + attribute.nome;
+            $.getJSON( url, function( data ) {
+                var optAttributes="";
+                for (var i = 0; i <= data.length - 1; i++) {
+                    optAttributes += '<option value="' + data[i].ano + '">' + data[i].ano + '</option>';
+                };
+                $("#year-selection").html(optAttributes);
+            });
+        },
+
         initializeTextlisteners: function(){
        
         },
 
-        loadDescriptionAndFile: function(){
+        loadFeaturesAttribute: function(){
             var attribute = self.loadRowAttributeById($("#attribute-selection").val());
             if(attribute){
                 self.loadDescription(attribute);
                 self.loadLinkFile(attribute);    
+                self.loadComboYear(attribute);
             }
         },
 
         initializeComboBoxlisteners : function(){
             $("#attribute-selection").change(function(){
-                self.loadDescriptionAndFile();
+                self.loadFeaturesAttribute();
             });
             $("#thema-selection").change(function(){
                 self.loadLegend($("#thema-selection option:selected").text());
@@ -219,7 +245,7 @@ var ThematicMapModule = function() {
         },
         
         clearForm: function(){
-            $("#name-thematic").val("");
+            //$("#name-thematic").val("");
             $("#classes-number").val("");
             $("#optC").prop('checked', false);
             $("#optA").prop('checked', false);
