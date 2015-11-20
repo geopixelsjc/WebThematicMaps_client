@@ -83,7 +83,7 @@ var MapModule = function() {
             };
 
             map.zoomToExtent(bounds);
-
+            
             $('#load-modal').modal('hide');
 
             alert("Tema " + featurecollection.name + " criado com sucesso!");
